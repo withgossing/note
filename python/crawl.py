@@ -40,8 +40,6 @@ for page in range(1, 3 +1):
     list = getKospi(page)
     result += list
 
-print(result)
-
 import json
 file = open("./kospi.json", "w+")
 file.write(json.dumps(result))
