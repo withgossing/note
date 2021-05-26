@@ -33,5 +33,5 @@ class MyHandler(handler.ContentHandler):
 
 
 h = MyHandler()
-s = open('target.xml', 'rb').read()
+s = open('groom_target.xml', 'rb').read()
 parseString(s, h)
