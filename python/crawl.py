@@ -1,5 +1,8 @@
+import json
 import requests
 from bs4 import BeautifulSoup
+
+result = []
 
 def crawl(url):
     data = requests.get(url)
@@ -34,12 +37,31 @@ def getKospi(page):
     list = parse(pageString)
     return list
 
-result = []
+def getKosdaq(page):
+    url = "https://finance.naver.com/sise/sise_index_day.nhn?code=KOSDAQ&page={}".format(page)
+    pageString = crawl(url)
+    list = parse(pageString)
+    return list
 
+def getFut(page):
+    url = "https://finance.naver.com/sise/sise_index_day.nhn?code=FUT&page={}".format(page)
+    pageString = crawl(url)
+    list = parse(pageString)
+    return list
+
+def getKpi200(page):
+    url = "https://finance.naver.com/sise/sise_index_day.nhn?code=KPI200&page={}".format(page)
+    pageString = crawl(url)
+    list = parse(pageString)
+    return list
+'''
+코스피200 편입종목 상위 순
+https://finance.naver.com/sise/entryJongmok.nhn?&page=1
+'''
+    
 for page in range(1, 3 +1):
     list = getKospi(page)
     result += list
 
-import json
 file = open("./kospi.json", "w+")
 file.write(json.dumps(result))
