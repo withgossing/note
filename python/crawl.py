@@ -1,8 +1,20 @@
 import json
 import requests
+import telepot
 from bs4 import BeautifulSoup
 
 result = []
+
+# KOSPI 마지막 페이지 가져오기
+def getLastPage():
+    url = "https://finance.naver.com/sise/sise_index_day.nhn?code=KOSPI&page=1"
+    data = requests.get(url)
+    bsObj = BeautifulSoup(data.content, "html.parser")
+    box_type_m = bsObj.find("div", {"class":"box_type_m"})
+    pgRR = box_type_m.find("td", {"class":"pgRR"})
+    lastLink = pgRR.a.attrs['href']
+    lastPage = lastLink[41:len(lastLink)]
+    return lastPage
 
 def crawl(url):
     data = requests.get(url)
@@ -19,7 +31,6 @@ def parse(pageString):
             dayIndex = getDayIndex(tr)
             dayIndexs.append(dayIndex)
         except Exception as e:
-            print("error")
             pass
     return dayIndexs
 
@@ -59,7 +70,9 @@ def getKpi200(page):
 https://finance.naver.com/sise/entryJongmok.nhn?&page=1
 '''
     
-for page in range(1, 3 +1):
+lastPage = getLastPage()
+    
+for page in range(1, int(lastPage) +1):
     list = getKospi(page)
     result += list
 
