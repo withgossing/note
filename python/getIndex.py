@@ -12,7 +12,20 @@ def getKospi():
     box_type_m = bsObj.find("div", {"class":"box_type_m"})
     type_1 = box_type_m.find("table", {"class":"type_1"})
     trs = type_1.findAll("tr")
-    print(trs)
+    day_row = tds = trs[2].findAll("td")
+    date = day_row[0].text
+    index = day_row[1].text
+    point_updn = day_row[2].text
+    rate_updn = day_row[3].textt
+    trde_qty = day_row[4].textt
+    trde_amt = day_row[5].text
+    
+    print(date)
+    print(index)
+    print(point_updn)
+    print(rate_updn)
+    print(trde_qty)
+    print(trde_amt)
     return 1
 
 def crawl(url):
@@ -43,45 +56,3 @@ def getDayIndex(tr):
 
   
 getKospi()
-
-  '''
-def getKospi(page):
-    url = "https://finance.naver.com/sise/sise_index_day.nhn?code=KOSPI&page={}".format(page)
-    pageString = crawl(url)
-    list = parse(pageString)
-    return list
-
-def getKosdaq(page):
-    url = "https://finance.naver.com/sise/sise_index_day.nhn?code=KOSDAQ&page={}".format(page)
-    pageString = crawl(url)
-    list = parse(pageString)
-    return list
-
-def getFut(page):
-    url = "https://finance.naver.com/sise/sise_index_day.nhn?code=FUT&page={}".format(page)
-    pageString = crawl(url)
-    list = parse(pageString)
-    return list
-
-def getKpi200(page):
-    url = "https://finance.naver.com/sise/sise_index_day.nhn?code=KPI200&page={}".format(page)
-    pageString = crawl(url)
-    list = parse(pageString)
-    return list
-    '''
-    
-'''
-코스피200 편입종목 상위 순
-https://finance.naver.com/sise/entryJongmok.nhn?&page=1
-'''
-   
-    
-  '''
-for page in range(1, int(lastPage) +1):
-    list = getKospi(page)
-    result += list
-'''
-  '''
-file = open("./kospi.json", "w+")
-file.write(json.dumps(result))
-'''
